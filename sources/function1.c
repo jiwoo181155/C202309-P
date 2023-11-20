@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MaxNumber 100
+#define Max_Number 100
 
 struct EmployData {
   char employ_name[50];
@@ -14,7 +14,7 @@ int main() {
     printf("추가할 사람의 수를 입력하시오: ");
     printf("------------------------------");
     scanf_s("%d",&num_people); 
-	struct EmployData EmployeeTable[MaxNumber] = {0};
+	struct EmployData EmployeeTable[Max_Number] = {0};
     for (int i = 0; i < num_people; i++) {
           printf("사원 이름을 입력하세요: ");
           scanf_s("%s", EmployeeTable[i].employ_name, 50);
