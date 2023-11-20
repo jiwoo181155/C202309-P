@@ -31,7 +31,7 @@ int main() {
   }
 
   printf("\n남아있는 사원 정보:\n");
-  for (int i = 0; i < num_people; ++i) {
+  for (int i = 0; i < num_people; i++) {
     printf("이름: %s\n", EmployeeTable[i].employ_name);
     printf("나이: %d\n", EmployeeTable[i].age);
     printf("입사 날짜: %s\n", EmployeeTable[i].start_company);
