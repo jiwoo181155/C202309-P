@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #define Max_Number 100
 
 struct EmployData {
@@ -9,7 +10,7 @@ struct EmployData {
   int age;
 };
 
-struct EmployData EmployeeTable[Max_Number];
+
 
 int FindPerson(struct EmployData Employeetable[], int num_people,
                const char *name) {
@@ -22,6 +23,7 @@ int FindPerson(struct EmployData Employeetable[], int num_people,
 }
 
 int main() {
+  int num_people = 0;
   while (1) {
     int choice = -1;
     printf("-------------------------\n");
@@ -39,51 +41,56 @@ int main() {
     printf("메뉴: ");
     scanf_s("%d", &choice);
 
-    int num_people;
+    int end = 0;
     char TargetName[50];
 
     switch (choice) {
       case 1:
         printf("추가할 사람의 수를 입력하시오: \n");
-        scanf_s("%d", &num_people);
+        int add_count;
+        scanf_s("%d", &add_count);
         printf("------------------------------\n");
         struct EmployData EmployeeTable[Max_Number] = {0};
-        for (int i = 0; i < num_people; i++) {
+        for (int i = 0; i < add_count; i++) {
           printf("사원 이름을 입력하세요: ");
-          scanf_s("%s", EmployeeTable[i].employ_name, 50);
+          scanf_s("%s", EmployeeTable[num_people].employ_name, 50);
           printf("사원의 입사날짜를 입력하세요(ex:1900/01/01): ");
-          scanf_s("%s", EmployeeTable[i].start_company, 30);
+          scanf_s("%s", EmployeeTable[num_people].start_company, 30);
           printf("사원의 거주지역을 입력하세요: ");
-          scanf_s("%s", EmployeeTable[i].residence, 50);
+          scanf_s("%s", EmployeeTable[num_people].residence, 50);
           printf("사원의 직급을 입력하세요: ");
-          scanf_s("%s", EmployeeTable[i].role, 20);
+          scanf_s("%s", EmployeeTable[num_people].role, 20);
           printf("사원의 나이를 입력하세요: ");
-          scanf_s("%d", &EmployeeTable[i].age);
+          scanf_s("%d", &EmployeeTable[num_people].age);
           printf("------------------------------\n");
+          num_people++;
         }
         break;
       case 2:
         printf("\n수정할 사람의 이름을 입력하세요: ");
-        scanf_s("%s", TargetName);
-
-        int choice;
-        printf("------------------------------");
-        printf("수정할 항목을 선택하세요:\n");
-        printf("1. 나이\n");
-        printf("2. 거주지\n");
-        printf("3. 직급\n");
-        printf("4. 근무 연도\n");
-        printf("------------------------------");
-        scanf_s("%d", &choice);
+        scanf_s("%s", TargetName,(int)sizeof(TargetName));
 
         int peopleIndex = FindPerson(EmployeeTable, Max_Number, TargetName);
+
+        if (peopleIndex == -1) {
+          printf("\n해당 사원은 존재하지 않습니다\n");
+          break;
+        }
+
+        int choice;
+        printf("『---------------------------\n");
+        printf("수정할 항목을 선택하세요:\n");
+        printf("1. 나이\n2. 거주지\n3. 직급\n4. 근무 연도\n");
+        printf(" ----------------------------』\n");
+        printf("수정할 항목 번호: ");
+        scanf_s("%d", &choice);
 
         if (peopleIndex != -1) {
           // 수정할 값 입력
           int NewAge;
           char NewResidence[50];
           char NewRole[50];
-          char Newstart_company;
+          char Newstart_company[50];
 
           switch (choice) {
             case 1:
@@ -93,23 +100,23 @@ int main() {
               break;
             case 2:
               printf("새로운 거주지 입력: ");
-              scanf_s("%s", NewResidence);
-              strcpy(EmployeeTable[peopleIndex].residence, NewResidence);
+              scanf_s("%s", NewResidence,(int)sizeof(NewResidence));
+              strcpy_s(EmployeeTable[peopleIndex].residence,16, NewResidence);
               break;
             case 3:
               printf("새로운 직급 입력: ");
-              scanf_s("%s", NewRole);
-              strcpy(EmployeeTable[peopleIndex].role, NewRole);
+              scanf_s("%s", NewRole,(int)sizeof(NewRole));
+              strcpy_s(EmployeeTable[peopleIndex].role,16, NewRole);
               break;
             case 4:
               printf("새로운 근무 연도 입력: ");
-              scanf_s("%d", &Newstart_company);
-              strcpy(EmployeeTable[peopleIndex].start_company,Newstart_company);
+              scanf_s("%s", Newstart_company, (int)sizeof(Newstart_company));
+              strcpy_s(EmployeeTable[peopleIndex].start_company,16,Newstart_company);
               break;
             default:
               printf("잘못된 선택입니다.\n");
           }
-        }
+        } 
         break;
       case 3:
         for (int i = 0; i < num_people; i++) {
@@ -120,6 +127,13 @@ int main() {
           printf("거주지: %s\n", EmployeeTable[i].residence);
         }
         break;
+      case 9:
+        end = -1;
+        break;
+    }
+    if (end == -1) {
+      printf("프로그램이 종료됩니다.\n");
+      break;
     }
   }
 }
