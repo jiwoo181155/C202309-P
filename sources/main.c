@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> 
 
 #define INITIAL_CAPACITY 10 //초기 구조체 배열 메모리 할당 크기
 
@@ -12,9 +12,79 @@ struct EmployData {
   int age;
 }; //사원의 정보를 저장할 구조체 정의
 
-struct EmployData *EmployeeTable = NULL; //구조체의 포인터 선언
-int num_people = 0; //입력된 사원 수를 의미하는 num_people의 초기값을 0으로 선언
-int capacity = 0; //동적으로 할당된 Employee 데이터를 저장하는 배열의 용량을 의미하는 변수 선언
+struct RetiredEmployeeData {
+  char employ_name[50];
+  char retired_date[30];  // 추가된 부분: 퇴사 날짜
+  char residence[50];
+  char role[20];
+  int age;
+};
+
+struct EmployData *EmployeeTable = NULL;  // 구조체의 포인터 선언
+struct ResignedEmployeeData *RetiredEmployeeTable = NULL;
+int num_retired_people = 0;
+int num_people =
+    0;  // 입력된 사원 수를 의미하는 num_people의 초기값을 0으로 선언
+int capacity = 0;  // 동적으로 할당된 Employee 데이터를 저장하는 배열의 용량을
+                   // 의미하는 변수 선언
+
+void AddRetiredEmployee(struct RetiredEmployeeData *table,
+                         int *num_retired_people) {
+  // 퇴사자 정보를 입력하는 부분 추가
+  printf("퇴사자 이름을 입력하세요: ");
+  scanf_s("%s", table[*num_retired_people].employ_name,
+          (int)sizeof(table[*num_retired_people].employ_name));
+  printf("퇴사 날짜를 입력하세요(ex:1900/01/01): ");
+  scanf_s("%s", table[*num_retired_people].retired_date,
+          (int)sizeof(table[*num_retired_people].retired_date));
+  printf("퇴사자의 거주지역을 입력하세요: ");
+  scanf_s("%s", table[*num_retired_people].residence,
+          (int)sizeof(table[*num_retired_people].residence));
+  printf("퇴사자의 직급을 입력하세요: ");
+  scanf_s("%s", table[*num_retired_people].role,
+          (int)sizeof(table[*num_retired_people].role));
+  printf("퇴사자의 나이를 입력하세요: ");
+  scanf_s("%d", &table[*num_retired_people].age, );
+
+  (**num_retired_people)++;
+}
+
+void RetiredEmployee() {
+  char TargetName[50];
+  printf("퇴사할 사원의 이름을 입력하세요: ");
+  scanf("%s", TargetName);
+
+  int peopleIndex = FindPerson(EmployeeTable, num_people, TargetName);
+
+  if (peopleIndex == -1) {
+    printf("해당 사원을 찾을 수 없습니다.\n");
+    return;
+  }
+
+  // 해당 사원을 퇴사자 명단으로 이동
+  AddResignedEmployee(RetiredEmployeeTable, &num_retired_people);
+
+  // 퇴사한 사원의 자리를 비움 (기존 배열에서 제거)
+  for (int i = peopleIndex; i < num_people - 1; i++) {
+    EmployeeTable[i] = EmployeeTable[i + 1];
+  }
+
+  // 퇴사자가 추가되었으므로 사원 수 감소
+  num_people--;
+}
+
+void DisplayRetiredEmployees(const struct ResignedEmployeeData *table,int num_resigned_people) {
+  for (int i = 0; i < num_resigned_people; i++) {
+    printf("이름: %s\n", table[i].employ_name);
+    printf("나이: %d\n", table[i].age);
+    printf("퇴사 날짜: %s\n", table[i].resignation_date);
+    printf("직급: %s\n", table[i].role);
+    printf("거주지: %s\n", table[i].residence);
+    printf("-------------------------\n");
+  }
+}
+
+
 
 int FindPerson(const struct EmployData *table, int num_people,const char *name) {
   for (int i = 0; i < num_people; ++i) {
@@ -154,6 +224,12 @@ int main() {
         break;
       case 3:
         PrintEmployee(EmployeeTable, num_people);
+        break;
+      case 4:
+        AddRetiredEmployee(RetiredEmployeeTable, &num_retired_people);
+        break;
+      case 5:
+        DisplayRetiredEmployees(RetiredEmployeeTable, num_retired_people);
         break;
       case 9:
         FreeMemory();
