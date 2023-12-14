@@ -1,7 +1,8 @@
+#include "employee.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "employee.h"
 
 struct EmployData *EmployeeTable = NULL;
 num_people = 0;
@@ -125,4 +126,6 @@ void PrintEmployee(const struct EmployData *table, int num_people) {
   }
 }  // 입력된 사원의 정보를 모두 사원별로 출력해주는 함수
 
-void FreeMemory_Employee() { free(EmployeeTable); }//동적할당 메모리 해제하여 메모리 누수 방지
+void FreeMemory_Employee() {
+  free(EmployeeTable);
+}  // 동적할당 메모리 해제하여 메모리 누수 방지
