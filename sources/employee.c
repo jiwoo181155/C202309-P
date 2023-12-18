@@ -73,6 +73,7 @@ void UpdateEmployee(struct EmployData *table, int num_people) {
     int update_choice;  // 수정할 항목의 번호를 입력받아 저장하는 변수 선언
     printf("-------------------------------\n");
     printf("수정할 항목을 선택하세요:\n");
+    printf("-------------------------------\n");
     printf("1. 나이\n2. 거주지\n3. 직급\n4. 근무 연도\n5. 종료\n");
     printf("-------------------------------\n");
     printf("메뉴: ");
