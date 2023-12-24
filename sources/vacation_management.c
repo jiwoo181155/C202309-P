@@ -46,7 +46,7 @@ void ManageVacation() {
     return;
   }
 
-  ResizeVacationTable();
+  ResizeVacationTable(); //메모리 재할당
 
   printf("휴가 출발일을 입력하세요 (ex: 1900/01/01): ");
   scanf_s("%s", VacationTable[num_vacation].start_date,
@@ -57,18 +57,18 @@ void ManageVacation() {
           (int)sizeof(VacationTable[num_vacation].return_date));
 
   printf("휴가 기간을 입력하세요 (일수): ");
-  scanf_s("%d", &VacationTable[num_vacation].duration);
+  scanf_s("%d", &VacationTable[num_vacation].duration); //휴가 정보 입력
 
   strcpy_s(VacationTable[num_vacation].employee_name,
-           sizeof(VacationTable[num_vacation].employee_name), employee_name);
+           sizeof(VacationTable[num_vacation].employee_name), employee_name); 
 
    int remainingLeaveDays =
-      LeaveTable[num_vacation].total_leave_days - VacationTable[num_vacation].duration;
+      LeaveTable[num_vacation].total_leave_days - VacationTable[num_vacation].duration; //남은 연차일수 계산
 
   if (remainingLeaveDays < 0) {
     printf("남은 연차일수가 부족합니다.\n");
     return;
-  }
+  } //연차일수 부족 알림
 
   // 연차 테이블 업데이트
   LeaveTable[num_vacation].remaining_leave_days = remainingLeaveDays;
@@ -87,7 +87,7 @@ void PrintVacation(const struct VacationData *table, int num_vacation) {
     printf("휴가 기간: %d 일\n", table[i].duration);
     printf("-------------------------------\n");
   }
-}
+} // 휴가 명단 출력하기
 
 void ReturnFromVacation(const char *name) {
   int TargetName_Vacation[50];
@@ -112,10 +112,10 @@ void ReturnFromVacation(const char *name) {
     printf("%s님은 휴가 명단에 없는 사원입니다. 복귀 처리를 할 수 없습니다.\n",
            name);
   }
-}
+}//휴가자 복귀처리함수=>휴가명단에서 복귀한 사원 삭제
 
 void InitializeAnnualLeave(const char *name) {
-  ResizeLeaveTable();
+  ResizeLeaveTable(); //메모리 재할당
   strcpy_s(LeaveTable[num_leave].employee_name,
            sizeof(LeaveTable[num_leave].employee_name), name);
   LeaveTable[num_leave].total_leave_days = 0;      // 총 연차일수 초기화

@@ -56,16 +56,16 @@ int main() {
           printf("-------------------------------\n");
           switch (choice_employee) {
             case 1:
-              AddEmployee(EmployeeTable, &num_people);
+              AddEmployee(EmployeeTable, &num_people); //신규사원 추가하기
               break;
             case 2:
-              UpdateEmployee(EmployeeTable, num_people);
+              UpdateEmployee(EmployeeTable, num_people); //사원 정보 수정하기
               break;
             case 3:
-              PrintEmployee(EmployeeTable, num_people);
+              PrintEmployee(EmployeeTable, num_people); //사원 명단 출력하기
               break;
             case 4:
-              roof_employee = 0;
+              roof_employee = 0; //메인메뉴로 돌아가기
               break;
             default:
               printf("잘못된 메뉴 선택입니다.\n");
@@ -87,13 +87,13 @@ int main() {
           printf("-------------------------------\n");
           switch (choice_resigned) {
             case 1:
-              MoveToResigned(EmployeeTable, &num_people);
+              MoveToResigned(EmployeeTable, &num_people); //퇴사자 명단으로 이동
               break;
             case 2:
-              PrintResigned(ResignedTable, num_resigned);
+              PrintResigned(ResignedTable, num_resigned); //퇴사자 명단 출력
               break;
             case 3:
-              roof_resigned = 0;
+              roof_resigned = 0; //메인메뉴로 돌아가기
               break;
             default:
               printf("잘못된 메뉴 선택입니다.\n");
@@ -135,13 +135,13 @@ int main() {
                 printf("-------------------------------\n");
                 switch (choice_leave_menu) {
                   case 1:
-                    SetTotalLeaveDays();
+                    SetTotalLeaveDays(); //총 연차일수(기본 연차)일괄 입력
                     break;
                   case 2:
-                    PrintAnnualLeave();
+                    PrintAnnualLeave(); //연차명단 출력
                     break;
                   case 3:
-                    roof_leave = 0;
+                    roof_leave = 0; //이전 메뉴로 돌아가기
                     break;
                   default:
                     printf("잘못된 선택입니다. 다시 입력하세요.\n");
@@ -150,7 +150,7 @@ int main() {
               roof_leave = 1;
               break;
             case 5:
-              roof_vacation = 0;
+              roof_vacation = 0; //메인 메뉴로 가기
               break;
             default:
               printf("잘못된 메뉴 선택입니다.\n");
@@ -160,6 +160,7 @@ int main() {
       case 4:
         FreeMemory_Employee();
         FreeMemory_ResignedEmployee();
+        FreeMemory_AnnualLeave();  //동적 메모리 할당 해제
         printf("프로그램을 종료합니다.");
         return 0;  // 종료
         break;
