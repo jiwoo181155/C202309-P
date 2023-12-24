@@ -1,5 +1,5 @@
 #include "employee.h"
-
+#include "vacation_management.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,13 +43,15 @@ void AddEmployee(struct EmployData *table, int *num_people) {
   printf("사원의 입사날짜를 입력하세요(ex:1900/01/01): ");
   scanf_s("%s", table[*num_people].start_company,
           (int)sizeof(table[*num_people].start_company));
-  printf("사원의 거주지역을 입력하세요: ");
+  printf("사원의 거주지역을 입력하세요(공백없이 입력): ");
   scanf_s("%s", table[*num_people].residence,
           (int)sizeof(table[*num_people].residence));
   printf("사원의 직급을 입력하세요: ");
   scanf_s("%s", table[*num_people].role, (int)sizeof(table[*num_people].role));
   printf("사원의 나이를 입력하세요: ");
   scanf_s("%d", &table[*num_people].age);
+
+  InitializeAnnualLeave(table[*num_people].employ_name);
 
   (*num_people)++;
 }  // 구조체 배열에 사원 정보를 입력하는 함수
@@ -86,7 +88,7 @@ void UpdateEmployee(struct EmployData *table, int num_people) {
         scanf_s("%d", &table[peopleIndex].age);
         break;
       case 2:  // 거주지 수정
-        printf("새로운 거주지 입력: ");
+        printf("새로운 거주지 입력(공백없이 입력): ");
         scanf_s("%s", table[peopleIndex].residence,
                 (int)sizeof(table[peopleIndex].residence));
         break;
@@ -130,3 +132,4 @@ void PrintEmployee(const struct EmployData *table, int num_people) {
 void FreeMemory_Employee() {
   free(EmployeeTable);
 }  // 동적할당 메모리 해제하여 메모리 누수 방지
+

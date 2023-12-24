@@ -1,8 +1,10 @@
 #include "resigned_employee.h"
-#include "employee.h"
+#include "vacation_management.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "employee.h"
 
 struct ResignedData *ResignedTable = NULL;
 int num_resigned = 0;
@@ -22,6 +24,24 @@ void ResizeResignedTable() {
 }  // 구조체 배열의 크기를 동적으로 조절하는 함수
    // 배열에 새로운 데이터를 추가하기 전에 배열 크기가 충분한지 확인하고 필요한
    // 경우 배열의 크기를 늘린다.
+
+void RemoveLeaveEntry(const char *employeeName) {
+  for (int i = 0; i < num_leave; ++i) {
+    if (strcmp(LeaveTable[i].employee_name, employeeName) == 0) {
+      // 해당 사원의 정보를 찾으면 삭제
+      for (int j = i; j < num_leave - 1; ++j) {
+        strcpy_s(LeaveTable[j].employee_name,
+                 sizeof(LeaveTable[j].employee_name),
+                 LeaveTable[j + 1].employee_name);
+        LeaveTable[j].total_leave_days = LeaveTable[j + 1].total_leave_days;
+        LeaveTable[j].remaining_leave_days =
+            LeaveTable[j + 1].remaining_leave_days;
+      }
+      --num_leave;  // 연차 구조체의 총 사원 수를 감소
+      break;
+    }
+  }
+}
 
 void MoveToResigned(struct EmployData *table, int *num_people) {
   char TargetName[50];
@@ -58,6 +78,8 @@ void MoveToResigned(struct EmployData *table, int *num_people) {
 
   num_resigned++;
 
+  RemoveLeaveEntry(TargetName);
+
   // 기존 사원 명단에서 삭제
   for (int i = peopleIndex; i < *num_people - 1; i++) {
     strcpy_s(table[i].employ_name, sizeof(table[i].employ_name),
@@ -86,6 +108,7 @@ void PrintResigned(const struct ResignedData *table, int num_resigned) {
     printf("-------------------------------\n");
   }
 }  // 입력된 퇴사한 사원의 정보를 사원별로 모두 출력해주는 함수
+
 
 void FreeMemory_ResignedEmployee() {
   free(ResignedTable);

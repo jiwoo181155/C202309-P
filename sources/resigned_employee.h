@@ -21,5 +21,7 @@ void ResizeResignedTable();
 void MoveToResigned(struct EmployData *table, int *num_people);
 void PrintResigned(const struct ResignedData *table, int num_resigned);
 void FreeMemory_ResignedEmployee();
-
+void RemoveLeaveEntry(const char *employeeName);
 #endif
+
+

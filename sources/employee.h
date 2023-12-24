@@ -28,5 +28,6 @@ void AddEmployee(struct EmployData *table, int *num_people);
 void UpdateEmployee(struct EmployData *table, int num_people);
 void PrintEmployee(const struct EmployData *table, int num_people);
 void FreeMemory_Employee();  // 동적할당 메모리 해제하여 메모리 누수 방지
+void InitializeAnnualLeave(const char *name);
 
 #endif
