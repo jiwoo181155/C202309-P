@@ -20,7 +20,7 @@ void ResizeVacationTable() {
       exit(EXIT_FAILURE);
     }
   }
-}
+} //휴가 구조체에 동적 메모리 재할당해주는 함수
 
 void ResizeLeaveTable() {
   if (num_leave == leave_capacity) {
@@ -32,7 +32,7 @@ void ResizeLeaveTable() {
       exit(EXIT_FAILURE);
     }
   }
-}
+}  //연차 구조체에 동적 메모리 재할당해주는 함수
 
 void ManageVacation() {
   char employee_name[50];
@@ -132,7 +132,7 @@ void PrintAnnualLeave() {
     printf("남은 연차일수: %d\n", LeaveTable[i].remaining_leave_days);
     printf("-------------------------------\n");
   }
-}
+} //연차 구조체 출력 함수
 
 void SetTotalLeaveDays() {
   printf("모든 사원의 총 연차일수를 입력하세요: ");
@@ -145,8 +145,7 @@ void SetTotalLeaveDays() {
   }
 
   printf("총 연차일수가 일괄 입력되었습니다.\n");
-}
-
+} //총 연차일수 일괄입력 함수
 
 void FreeMemory_Vacation() { free(VacationTable); }
 void FreeMemory_AnnualLeave() { free(LeaveTable); }
